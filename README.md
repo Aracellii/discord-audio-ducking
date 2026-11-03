@@ -1,5 +1,7 @@
 # Discord Duck
 
+[English](README.md) · [Español](README.es.md) · [简体中文](README.zh-CN.md)
+
 ```text
        ___
    __ /   \ __
@@ -28,13 +30,13 @@ It uses the PulseAudio compatibility interface provided by PipeWire:
 - `pactl` and `parec`
 - Python 3.9 or newer
 
-## Instalasi langkah demi langkah
+## Step-by-step installation
 
-### 1. Pastikan sistem menggunakan Linux
+### 1. Use Linux
 
-Discord Duck menggunakan `pactl` dan `parec`, jadi Windows dan macOS belum didukung.
+Discord Duck uses `pactl` and `parec`, so Windows and macOS are not currently supported.
 
-### 2. Pasang dependensi
+### 2. Install dependencies
 
 Fedora:
 
@@ -54,20 +56,20 @@ Arch Linux:
 sudo pacman -S python pipewire-pulse libpulse
 ```
 
-Pastikan perintah audio tersedia:
+Make sure the audio commands are available:
 
 ```bash
 command -v pactl
 command -v parec
 ```
 
-### 3. Masuk ke folder proyek
+### 3. Enter the project directory
 
 ```bash
 cd ~/Portofolio/Discord_Duck
 ```
 
-### 4. Buat konfigurasi
+### 4. Create the configuration
 
 ```bash
 mkdir -p ~/.config/discord-duck
@@ -80,23 +82,23 @@ cat > ~/.config/discord-duck/config.json <<'EOF'
 EOF
 ```
 
-### 5. Jalankan secara manual
+### 5. Run manually
 
 ```bash
 python3 discord_duck.py
 ```
 
-Biarkan terminal tetap terbuka, lalu masuk ke voice channel Discord dan uji audio dari aplikasi lain. Hentikan dengan `Ctrl+C`.
+Keep the terminal open, join a Discord voice channel, and test audio from another application. Stop with `Ctrl+C`.
 
-### 6. Jalankan otomatis saat login
+### 6. Start automatically at login
 
-Buat service user:
+Create the user service directory:
 
 ```bash
 mkdir -p ~/.config/systemd/user
 ```
 
-Simpan konfigurasi service berikut sebagai `~/.config/systemd/user/discord-duck.service`:
+Save the following service as `~/.config/systemd/user/discord-duck.service`:
 
 ```ini
 [Unit]
@@ -112,21 +114,21 @@ RestartSec=2
 WantedBy=default.target
 ```
 
-Aktifkan service:
+Enable the service:
 
 ```bash
 systemctl --user daemon-reload
 systemctl --user enable --now discord-duck.service
 ```
 
-Periksa status dan log:
+Check the status and logs:
 
 ```bash
 systemctl --user status discord-duck.service
 journalctl --user -u discord-duck.service -f
 ```
 
-Hentikan atau nonaktifkan otomatis:
+Stop or disable automatic startup:
 
 ```bash
 systemctl --user disable --now discord-duck.service

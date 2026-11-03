@@ -16,6 +16,10 @@ except ImportError:
     IAudioMeterInformation = None
 
 CONFIG_PATH = Path(os.environ.get("APPDATA", Path.home())) / "Discord Duck" / "config.json"
+INSTALL_DIR = Path(os.environ.get("LOCALAPPDATA", Path.home())) / "Discord Duck"
+COMMAND_DIR = INSTALL_DIR / "bin"
+INSTALLED_SCRIPT = INSTALL_DIR / "discord_duck_windows.py"
+COMMAND_FILE = COMMAND_DIR / "discord-duck.cmd"
 DEFAULT_CONFIG = {"enabled": True, "sensitivity": 30, "release_seconds": 2.0}
 DUCK_FACTOR = 0.20
 POLL_SECONDS = 0.10
@@ -118,19 +122,50 @@ def daemon():
 
 
 def install_task():
-    script = str(Path(__file__).resolve())
+    if sys.platform != "win32":
+        raise SystemExit("The Windows installer must be run on Windows.")
+    INSTALL_DIR.mkdir(parents=True, exist_ok=True)
+    COMMAND_DIR.mkdir(parents=True, exist_ok=True)
+    INSTALLED_SCRIPT.write_bytes(Path(__file__).resolve().read_bytes())
+    COMMAND_FILE.write_text(
+        f'@echo off\n"{sys.executable}" "{INSTALLED_SCRIPT}" %*\n',
+        encoding="utf-8",
+    )
+    import winreg
+    with winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Environment", 0, winreg.KEY_READ | winreg.KEY_WRITE) as key:
+        try:
+            current_path = winreg.QueryValueEx(key, "Path")[0]
+        except FileNotFoundError:
+            current_path = ""
+        path_parts = [part for part in current_path.split(";") if part]
+        if str(COMMAND_DIR) not in path_parts:
+            path_parts.append(str(COMMAND_DIR))
+            winreg.SetValueEx(key, "Path", 0, winreg.REG_EXPAND_SZ, ";".join(path_parts))
+    script = str(INSTALLED_SCRIPT)
     command = f'"{sys.executable}" "{script}"'
     subprocess.run(["schtasks", "/Create", "/TN", "Discord Duck", "/SC", "ONLOGON", "/TR", command, "/F"], check=True)
-    print("Discord Duck Windows task installed.")
+    print("Discord Duck Windows daemon installed.")
+    print(f"Command: {COMMAND_FILE}")
+    print("Open a new terminal before using: discord-duck --status")
 
 
 def uninstall_task():
     subprocess.run(["schtasks", "/Delete", "/TN", "Discord Duck", "/F"], check=False)
-    print("Discord Duck Windows task removed.")
+    if COMMAND_DIR.exists():
+        for path in COMMAND_DIR.iterdir():
+            path.unlink(missing_ok=True)
+        COMMAND_DIR.rmdir()
+    if INSTALL_DIR.exists():
+        INSTALLED_SCRIPT.unlink(missing_ok=True)
+        try:
+            INSTALL_DIR.rmdir()
+        except OSError:
+            pass
+    print("Discord Duck Windows daemon removed.")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Discord Duck for Windows")
+    parser = argparse.ArgumentParser(description="Discord Duck")
     actions = parser.add_mutually_exclusive_group()
     actions.add_argument("--enable", action="store_true")
     actions.add_argument("--disable", action="store_true")

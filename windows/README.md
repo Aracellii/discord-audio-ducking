@@ -26,6 +26,12 @@ Install the automatic logon daemon:
 py discord_duck_windows.py --install
 ```
 
+Open a new PowerShell window after installation. The command is then the same as on Linux:
+
+```powershell
+discord-duck --status
+```
+
 Start the daemon manually for a test:
 
 ```powershell
@@ -37,12 +43,12 @@ The daemon uses Windows Audio Session API peak meters and per-application sessio
 ## Terminal controls
 
 ```powershell
-py discord_duck_windows.py --status
-py discord_duck_windows.py --enable
-py discord_duck_windows.py --disable
-py discord_duck_windows.py --toggle
-py discord_duck_windows.py --sensitivity 50
-py discord_duck_windows.py --release 3.0
+discord-duck --status
+discord-duck --enable
+discord-duck --disable
+discord-duck --toggle
+discord-duck --sensitivity 50
+discord-duck --release 3.0
 ```
 
 Settings are stored in `%APPDATA%\Discord Duck\config.json`.

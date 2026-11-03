@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Discord Audio Ducking for Linux and Windows</title>
+  <meta name="description" content="Discord audio ducking for Linux and Windows. Automatically lower other applications when someone speaks in Discord.">
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; }
+    body { margin: 0; background: #17151f; color: #f5f2ff; }
+    main { max-width: 850px; margin: auto; padding: 48px 24px; }
+    a { color: #c7a8ff; }
+    .hero { display: grid; gap: 18px; grid-template-columns: 160px 1fr; align-items: center; }
+    .hero img { width: 160px; border-radius: 24px; }
+    .card { background: #242130; border: 1px solid #3c3450; border-radius: 16px; padding: 22px; margin-top: 24px; }
+    code, pre { background: #100e16; border-radius: 8px; }
+    code { padding: 2px 6px; }
+    pre { overflow-x: auto; padding: 16px; }
+    @media (max-width: 560px) { .hero { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<main>
+  <section class="hero">
+    <img src="../duck.jpeg" alt="Discord Duck mascot">
+    <div>
+      <h1>Discord Audio Ducking for Linux and Windows</h1>
+      <p>Discord Duck automatically lowers other application audio while someone is speaking in Discord.</p>
+      <a href="https://github.com/Aracellii/Discord_Duck">View the source repository</a>
+    </div>
+  </section>
+  <section class="card">
+    <h2>How it works</h2>
+    <p>Discord remains at normal volume. Other applications are lowered to 20%, then restored after the configurable release duration.</p>
+    <h2>Install</h2>
+    <pre><code>git clone https://github.com/Aracellii/Discord_Duck.git
+cd Discord_Duck/linux
+python3 install.py</code></pre>
+    <p>For Windows, install <code>pycaw</code> and follow the <a href="https://github.com/Aracellii/Discord_Duck/tree/main/windows">Windows guide</a>.</p>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="260" viewBox="0 0 900 260" role="img" aria-labelledby="title desc">
+  <title id="title">Discord audio ducking before and after</title>
+  <desc id="desc">Discord remains at full volume while other applications are reduced when someone speaks.</desc>
+  <rect width="900" height="260" rx="24" fill="#242130"/>
+  <text x="40" y="46" fill="#fff" font-family="sans-serif" font-size="24" font-weight="700">Discord Duck · before and after</text>
+  <text x="40" y="92" fill="#c7a8ff" font-family="sans-serif" font-size="18">Discord</text>
+  <rect x="160" y="75" width="680" height="28" rx="14" fill="#4b4161"/>
+  <rect x="160" y="75" width="680" height="28" rx="14" fill="#9b73e8"/>
+  <text x="850" y="96" text-anchor="end" fill="#fff" font-family="sans-serif" font-size="17">100%</text>
+  <text x="40" y="154" fill="#c7a8ff" font-family="sans-serif" font-size="18">Other audio</text>
+  <rect x="160" y="137" width="680" height="28" rx="14" fill="#4b4161"/>
+  <rect x="160" y="137" width="136" height="28" rx="14" fill="#e39a68"/>
+  <text x="850" y="158" text-anchor="end" fill="#fff" font-family="sans-serif" font-size="17">20%</text>
+  <text x="40" y="214" fill="#d9d0eb" font-family="sans-serif" font-size="16">Discord voice activity lowers other apps, then restores them automatically.</text>
+</svg>

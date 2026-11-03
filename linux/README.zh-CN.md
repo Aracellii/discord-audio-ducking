@@ -2,7 +2,7 @@
 
 [English](README.md) · [Español](README.es.md) · [简体中文](README.zh-CN.md)
 
-![Discord Duck](duck.jpeg)
+![Discord Duck](../duck.jpeg)
 
 Discord Duck 是一个 Linux 音频工具。当 Discord 语音频道中有人说话时，它会暂时降低所有非 Discord 音频的音量。Discord 音频本身不会被降低。
 
@@ -11,7 +11,7 @@ Discord Duck 是一个 Linux 音频工具。当 Discord 语音频道中有人说
 运行安装程序即可自动配置 daemon、默认设置和终端命令：
 
 ```bash
-cd ~/Portofolio/Discord_Duck
+cd ~/Portofolio/Discord_Duck/linux
 python3 install.py
 ```
 
@@ -73,7 +73,7 @@ command -v parec
 ### 3. 进入项目目录
 
 ```bash
-cd ~/Portofolio/Discord_Duck
+cd ~/Portofolio/Discord_Duck/linux
 ```
 
 ### 4. 创建配置文件

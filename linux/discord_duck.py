@@ -219,7 +219,9 @@ def main():
     if control_action:
         config_path.parent.mkdir(parents=True, exist_ok=True)
         config_path.write_text(json.dumps(defaults, indent=2) + "\n", encoding="utf-8")
-        if args.status or args.enable or args.disable or args.toggle or args.sensitivity is not None or args.release is not None:
+        if args.enable or args.disable or args.toggle:
+            print(f"discord-duck {'on' if defaults['enabled'] else 'off'}")
+        elif args.status or args.sensitivity is not None or args.release is not None:
             print(json.dumps(defaults, indent=2))
         if args.status:
             return

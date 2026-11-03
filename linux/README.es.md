@@ -2,7 +2,7 @@
 
 [English](README.md) · [Español](README.es.md) · [简体中文](README.zh-CN.md)
 
-![Discord Duck](duck.jpeg)
+![Discord Duck](../duck.jpeg)
 
 Discord Duck reduce temporalmente el volumen de todo el audio que no pertenece a Discord cuando alguien habla en un canal de voz. El audio de Discord nunca se reduce.
 
@@ -11,7 +11,7 @@ Discord Duck reduce temporalmente el volumen de todo el audio que no pertenece a
 Ejecuta el instalador para configurar automáticamente el daemon, la configuración predeterminada y el comando de terminal:
 
 ```bash
-cd ~/Portofolio/Discord_Duck
+cd ~/Portofolio/Discord_Duck/linux
 python3 install.py
 ```
 
@@ -73,7 +73,7 @@ command -v parec
 ### 3. Entra en la carpeta del proyecto
 
 ```bash
-cd ~/Portofolio/Discord_Duck
+cd ~/Portofolio/Discord_Duck/linux
 ```
 
 ### 4. Crea la configuración

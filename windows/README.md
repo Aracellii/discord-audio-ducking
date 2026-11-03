@@ -14,6 +14,13 @@ This Windows version lowers every non-Discord audio session while someone is spe
 
 ## Install
 
+Clone repository:
+
+```powershell
+git clone https://github.com/Aracellii/Discord_Duck.git
+cd Discord_Duck\windows
+```
+
 Open PowerShell in this folder and install the audio libraries:
 
 ```powershell

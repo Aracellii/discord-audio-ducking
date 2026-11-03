@@ -27,6 +27,7 @@ It uses the PulseAudio compatibility interface provided by PipeWire:
 The easiest method is to run the installer. It installs the daemon, creates the default configuration, enables automatic startup, and provides the `discord-duck` terminal command:
 
 ```bash
+git clone https://github.com/Aracellii/Discord_Duck.git
 cd ~/Portofolio/Discord_Duck/linux
 python3 install.py
 ```

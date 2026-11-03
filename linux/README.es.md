@@ -11,6 +11,7 @@ Discord Duck reduce temporalmente el volumen de todo el audio que no pertenece a
 Ejecuta el instalador para configurar automáticamente el daemon, la configuración predeterminada y el comando de terminal:
 
 ```bash
+git clone https://github.com/Aracellii/Discord_Duck.git
 cd ~/Portofolio/Discord_Duck/linux
 python3 install.py
 ```

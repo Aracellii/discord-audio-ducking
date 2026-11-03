@@ -2,9 +2,18 @@
 
 ![Discord Duck](duck.jpeg)
 
+## Clone the repository
+
+```bash
+git clone https://github.com/Aracellii/Discord_Duck.git
+cd Discord_Duck
+```
+
 Discord Duck is an open-source Discord audio ducking utility for Linux and Windows. It automatically lowers other application audio while someone is speaking in Discord.
 
-[Linux](linux/README.md) · [Windows](windows/README.md) · [Changelog](CHANGELOG.md) · [Live documentation](https://aracellii.github.io/Discord_Duck/)
+[English](README.md) · [Bahasa Indonesia](linux/README.id.md) · [Español](linux/README.es.md) · [简体中文](linux/README.zh-CN.md)
+
+[Linux](linux/README.md) · [Windows](windows/README.md) · [Changelog](CHANGELOG.md)
 
 ![Before and after audio ducking](docs/demo.svg)
 
@@ -60,39 +69,6 @@ discord-duck --enable
 ```
 
 The daemon stores the original per-application volume and restores it after the release duration.
-
-## GitHub Pages
-
-The repository includes a ready-to-publish page in [`docs/index.html`](docs/index.html). To publish it:
-
-1. Open the repository on GitHub.
-2. Open **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**.
-4. Select the default branch and the `/docs` folder.
-5. Click **Save**.
-
-The page title is `Discord Audio Ducking for Linux and Windows` and links back to this repository.
-
-## Search visibility setup
-
-1. Set the repository description to: `Discord audio ducking for Linux and Windows. Automatically lower other applications when someone speaks in Discord.`
-2. Add these repository topics: `discord`, `audio-ducking`, `discord-ducking`, `audio-volume-control`, `pipewire`, `pulseaudio`, `windows-audio`, `pycaw`, `python`, `voice-activity-detection`.
-3. Publish a GitHub Release with a version number and link it from the changelog.
-4. Publish GitHub Pages using the steps above.
-5. Add the GitHub Pages URL to Google Search Console and request indexing.
-
-The repository can also be configured with GitHub CLI after authentication:
-
-```bash
-gh auth login
-gh repo edit Aracellii/Discord_Duck \
-  --description "Discord audio ducking for Linux and Windows. Automatically lower other applications when someone speaks in Discord."
-gh repo edit Aracellii/Discord_Duck \
-  --add-topic discord --add-topic audio-ducking --add-topic discord-ducking \
-  --add-topic audio-volume-control --add-topic pipewire --add-topic pulseaudio \
-  --add-topic windows-audio --add-topic pycaw --add-topic python \
-  --add-topic voice-activity-detection
-```
 
 ## License
 

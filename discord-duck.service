@@ -1,0 +1,13 @@
+[Unit]
+Description=Discord Duck audio ducking daemon
+After=pipewire-pulse.service
+Wants=pipewire-pulse.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 %h/.local/share/discord-duck/discord_duck.py
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target

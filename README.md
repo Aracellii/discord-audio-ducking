@@ -2,17 +2,7 @@
 
 [English](README.md) · [Español](README.es.md) · [简体中文](README.zh-CN.md)
 
-```text
-       ___
-   __ /   \ __
-  /  | o o |  \
-  \  |  ^  |  /
-   \_|\___/|_/
-     /|💬|\
-    /_|___|_\
-      /   \
-     /_____\
-```
+![Discord Duck](duck.jpeg)
 
 Discord Duck is a small Linux utility that lowers every non-Discord audio stream while someone is speaking in a Discord voice channel. Discord audio itself is never lowered.
 
@@ -31,6 +21,32 @@ It uses the PulseAudio compatibility interface provided by PipeWire:
 - Python 3.9 or newer
 
 ## Step-by-step installation
+
+### Quick install
+
+The easiest method is to run the installer. It installs the daemon, creates the default configuration, enables automatic startup, and provides the `discord-duck` terminal command:
+
+```bash
+cd ~/Portofolio/Discord_Duck
+python3 install.py
+```
+
+After installation, all settings can be controlled from the terminal:
+
+```bash
+discord-duck --status
+discord-duck --toggle
+discord-duck --enable
+discord-duck --disable
+discord-duck --sensitivity 50
+discord-duck --release 3.0
+```
+
+To remove the daemon and installed files:
+
+```bash
+python3 install.py --uninstall
+```
 
 ### 1. Use Linux
 
@@ -98,7 +114,14 @@ Create the user service directory:
 mkdir -p ~/.config/systemd/user
 ```
 
-Save the following service as `~/.config/systemd/user/discord-duck.service`:
+Copy the included service file into your user systemd directory:
+
+```bash
+mkdir -p ~/.config/systemd/user
+cp discord-duck.service ~/.config/systemd/user/discord-duck.service
+```
+
+The included service file contains:
 
 ```ini
 [Unit]
@@ -106,7 +129,7 @@ Description=Discord Duck audio ducking
 After=pipewire-pulse.service
 
 [Service]
-ExecStart=/usr/bin/python3 %h/Portofolio/Discord_Duck/discord_duck.py
+ExecStart=/usr/bin/python3 %h/.local/share/discord-duck/discord_duck.py
 Restart=on-failure
 RestartSec=2
 
@@ -134,6 +157,21 @@ Stop or disable automatic startup:
 systemctl --user disable --now discord-duck.service
 ```
 
+## Toggle and settings
+
+The daemon reads the configuration file continuously, so these commands can be used while the service is running:
+
+```bash
+python3 discord_duck.py --enable
+python3 discord_duck.py --disable
+python3 discord_duck.py --toggle
+python3 discord_duck.py --status
+python3 discord_duck.py --sensitivity 50
+python3 discord_duck.py --release 3.0
+```
+
+`--enable`, `--disable`, and `--toggle` change the persistent on/off state. `--sensitivity` changes the voice detection sensitivity from 1 to 100. `--release` changes the release duration from 0.1 to 30 seconds.
+
 ## Usage
 
 ```bash
@@ -158,7 +196,12 @@ Command-line options:
 --config PATH          Use a custom configuration file
 --sensitivity 1-100    Override sensitivity
 --release SECONDS      Override release duration
---disable              Start disabled
+--enable               Enable ducking and exit
+--disable              Disable ducking and exit
+--toggle               Toggle ducking and exit
+--status               Print current settings and exit
+--sensitivity 1-100    Save sensitivity and exit
+--release SECONDS      Save release duration and exit
 ```
 
 ## License

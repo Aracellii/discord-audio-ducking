@@ -2,19 +2,33 @@
 
 [English](README.md) · [Español](README.es.md) · [简体中文](README.zh-CN.md)
 
-```text
-       ___
-   __ /   \ __
-  /  | o o |  \
-  \  |  ^  |  /
-   \_|\___/|_/
-     /|💬|\
-    /_|___|_\
-      /   \
-     /_____\
-```
+![Discord Duck](duck.jpeg)
 
 Discord Duck reduce temporalmente el volumen de todo el audio que no pertenece a Discord cuando alguien habla en un canal de voz. El audio de Discord nunca se reduce.
+
+## Instalación rápida
+
+Ejecuta el instalador para configurar automáticamente el daemon, la configuración predeterminada y el comando de terminal:
+
+```bash
+cd ~/Portofolio/Discord_Duck
+python3 install.py
+```
+
+Después puedes controlar todas las funciones desde la terminal:
+
+```bash
+discord-duck --status
+discord-duck --toggle
+discord-duck --sensitivity 50
+discord-duck --release 3.0
+```
+
+Para eliminar el daemon y los archivos instalados:
+
+```bash
+python3 install.py --uninstall
+```
 
 ## Requisitos
 
@@ -99,7 +113,7 @@ Description=Discord Duck audio ducking
 After=pipewire-pulse.service
 
 [Service]
-ExecStart=/usr/bin/python3 %h/Portofolio/Discord_Duck/discord_duck.py
+ExecStart=/usr/bin/python3 %h/.local/share/discord-duck/discord_duck.py
 Restart=on-failure
 RestartSec=2
 
@@ -135,6 +149,30 @@ systemctl --user disable --now discord-duck.service
 --release SECONDS      Sobrescribe la duración de liberación
 --disable              Inicia desactivado
 ```
+
+## Daemon y controles
+
+El archivo `discord-duck.service` incluido ejecuta el programa como daemon de systemd. Instálalo así:
+
+```bash
+mkdir -p ~/.config/systemd/user
+cp discord-duck.service ~/.config/systemd/user/discord-duck.service
+systemctl --user daemon-reload
+systemctl --user enable --now discord-duck.service
+```
+
+Puedes cambiar el estado y los ajustes sin detener el daemon:
+
+```bash
+python3 discord_duck.py --enable
+python3 discord_duck.py --disable
+python3 discord_duck.py --toggle
+python3 discord_duck.py --status
+python3 discord_duck.py --sensitivity 50
+python3 discord_duck.py --release 3.0
+```
+
+`--enable`, `--disable` y `--toggle` controlan el estado persistente. `--sensitivity` acepta valores de 1 a 100 y `--release` acepta entre 0.1 y 30 segundos.
 
 ## Licencia
 

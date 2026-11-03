@@ -184,34 +184,53 @@ class DiscordDuck:
 def main():
     parser = argparse.ArgumentParser(description="Duck non-Discord audio while someone speaks in Discord.")
     parser.add_argument("--config", default="~/.config/discord-duck/config.json")
-    parser.add_argument("--sensitivity", type=int, choices=range(1, 101), metavar="1-100")
-    parser.add_argument("--release", type=float, metavar="SECONDS")
-    parser.add_argument("--disable", action="store_true")
+    parser.add_argument("--enable", action="store_true", help="Enable ducking and exit")
+    parser.add_argument("--disable", action="store_true", help="Disable ducking and exit")
+    parser.add_argument("--toggle", action="store_true", help="Toggle ducking and exit")
+    parser.add_argument("--status", action="store_true", help="Print the current configuration and exit")
+    parser.add_argument("--sensitivity", type=int, choices=range(1, 101), metavar="1-100", help="Persist sensitivity and exit")
+    parser.add_argument("--release", type=float, metavar="SECONDS", help="Persist release duration and exit")
     args = parser.parse_args()
     config_path = Path(args.config).expanduser()
     defaults = DEFAULT_CONFIG.copy()
     try:
-        defaults.update(json.loads(config_path.read_text(encoding="utf-8")))
+        stored = json.loads(config_path.read_text(encoding="utf-8"))
+        if isinstance(stored, dict):
+            defaults.update(stored)
     except (OSError, ValueError, TypeError):
         pass
+
+    control_action = any((args.enable, args.disable, args.toggle, args.status,
+                          args.sensitivity is not None, args.release is not None))
+    if args.enable and args.disable or args.enable and args.toggle or args.disable and args.toggle:
+        parser.error("--enable, --disable, and --toggle cannot be combined")
     if args.sensitivity is not None:
         defaults["sensitivity"] = args.sensitivity
     if args.release is not None:
+        if not 0.1 <= args.release <= 30.0:
+            parser.error("--release must be between 0.1 and 30 seconds")
         defaults["release_seconds"] = args.release
+    if args.enable:
+        defaults["enabled"] = True
     if args.disable:
         defaults["enabled"] = False
+    if args.toggle:
+        defaults["enabled"] = not bool(defaults.get("enabled", True))
+    if control_action:
+        config_path.parent.mkdir(parents=True, exist_ok=True)
+        config_path.write_text(json.dumps(defaults, indent=2) + "\n", encoding="utf-8")
+        if args.status or args.enable or args.disable or args.toggle or args.sensitivity is not None or args.release is not None:
+            print(json.dumps(defaults, indent=2))
+        if args.status:
+            return
+        if args.enable or args.disable or args.toggle or args.sensitivity is not None or args.release is not None:
+            return
     duck = DiscordDuck(
         config_path,
         enabled=defaults.get("enabled", True),
         sensitivity=defaults.get("sensitivity", 30),
         release_seconds=defaults.get("release_seconds", 2.0),
     )
-    if args.sensitivity is not None:
-        duck.overrides["sensitivity"] = args.sensitivity
-    if args.release is not None:
-        duck.overrides["release_seconds"] = args.release
-    if args.disable:
-        duck.overrides["enabled"] = False
     signal.signal(signal.SIGTERM, lambda *_: (_ for _ in ()).throw(SystemExit(0)))
     signal.signal(signal.SIGINT, lambda *_: (_ for _ in ()).throw(SystemExit(0)))
     duck.run()

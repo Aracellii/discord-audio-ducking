@@ -2,19 +2,33 @@
 
 [English](README.md) · [Español](README.es.md) · [简体中文](README.zh-CN.md)
 
-```text
-       ___
-   __ /   \ __
-  /  | o o |  \
-  \  |  ^  |  /
-   \_|\___/|_/
-     /|💬|\
-    /_|___|_\
-      /   \
-     /_____\
-```
+![Discord Duck](duck.jpeg)
 
 Discord Duck 是一个 Linux 音频工具。当 Discord 语音频道中有人说话时，它会暂时降低所有非 Discord 音频的音量。Discord 音频本身不会被降低。
+
+## 快速安装
+
+运行安装程序即可自动配置 daemon、默认设置和终端命令：
+
+```bash
+cd ~/Portofolio/Discord_Duck
+python3 install.py
+```
+
+安装后可以通过终端控制所有功能：
+
+```bash
+discord-duck --status
+discord-duck --toggle
+discord-duck --sensitivity 50
+discord-duck --release 3.0
+```
+
+删除 daemon 和已安装文件：
+
+```bash
+python3 install.py --uninstall
+```
 
 ## 系统要求
 
@@ -99,7 +113,7 @@ Description=Discord Duck audio ducking
 After=pipewire-pulse.service
 
 [Service]
-ExecStart=/usr/bin/python3 %h/Portofolio/Discord_Duck/discord_duck.py
+ExecStart=/usr/bin/python3 %h/.local/share/discord-duck/discord_duck.py
 Restart=on-failure
 RestartSec=2
 
@@ -135,6 +149,30 @@ systemctl --user disable --now discord-duck.service
 --release SECONDS      覆盖恢复延迟
 --disable              以禁用状态启动
 ```
+
+## Daemon 和开关控制
+
+项目中包含 `discord-duck.service`，可以作为 systemd 用户 daemon 运行：
+
+```bash
+mkdir -p ~/.config/systemd/user
+cp discord-duck.service ~/.config/systemd/user/discord-duck.service
+systemctl --user daemon-reload
+systemctl --user enable --now discord-duck.service
+```
+
+daemon 运行时也可以直接修改状态和设置：
+
+```bash
+python3 discord_duck.py --enable
+python3 discord_duck.py --disable
+python3 discord_duck.py --toggle
+python3 discord_duck.py --status
+python3 discord_duck.py --sensitivity 50
+python3 discord_duck.py --release 3.0
+```
+
+`--enable`、`--disable` 和 `--toggle` 用于控制持久化的开关状态。`--sensitivity` 范围是 1 到 100，`--release` 范围是 0.1 到 30 秒。
 
 ## 许可证
 

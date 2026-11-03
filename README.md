@@ -43,6 +43,28 @@ Discord Duck is an open-source Discord audio ducking utility for Linux and Windo
 
 Both versions support persistent terminal controls for enable, disable, toggle, sensitivity, and release duration.
 
+## Terminal commands after installation
+
+The same commands are available on Linux and Windows after installation:
+
+```text
+discord-duck --status
+discord-duck --enable
+discord-duck --disable
+discord-duck --toggle
+discord-duck --sensitivity 50
+discord-duck --release 3.0
+```
+
+- `--status` shows the current configuration.
+- `--enable` turns ducking on.
+- `--disable` turns ducking off.
+- `--toggle` switches between on and off.
+- `--sensitivity 50` changes voice detection sensitivity from 1 to 100.
+- `--release 3.0` keeps other audio lowered for 3 seconds after Discord becomes quiet.
+
+On Windows, open a new PowerShell window after installation before using the `discord-duck` command.
+
 ## Troubleshooting
 
 ### The command is not found
